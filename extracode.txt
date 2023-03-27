@@ -1,0 +1,59 @@
+if(tile[i].classList.contains('filled1')&&tile[i].textContent!=button.textContent){
+      const wrongS = tile[i].textContent;
+      const row = tile[i].dataset.row;
+      const col = tile[i].dataset.col;
+      const cellR = tile[i].dataset.cellrow;
+      const cellC = tile[i].dataset.cellcol;
+      const rowEls = document.querySelectorAll(`[data-row="${row}"]`);
+      const colEls = document.querySelectorAll(`[data-col="${col}"]`);
+      const cellREls = document.querySelectorAll(`[data-cellrow="${cellR}"][data-cellcol="${cellC}"]`);
+      rowEls.forEach(el => {
+        if(el.textContent == wrongS&&(el.dataset.row!=row||el.dataset.col!=col)){
+          if(wrong[el.dataset.row][el.dataset.col]==1){
+            el.classList.remove('wrong','wrong1');
+            tile[i].classList.remove('wrong','wrong1');
+            wrong[el.dataset.row][el.dataset.col]-=1;
+            printarr(wrong);
+            wrong[row][col]=0;
+          } else {
+            printarr(wrong);
+            wrong[el.dataset.row][el.dataset.col]-=1;
+            wrong[row][col]-=1;
+          }
+        }
+      });
+      colEls.forEach(el => {
+        if(el.textContent == wrongS&&(el.dataset.row!=row||el.dataset.col!=col)){
+          if(wrong[el.dataset.row][el.dataset.col]==1){
+            el.classList.remove('wrong','wrong1');
+            tile[i].classList.remove('wrong','wrong1');
+            wrong[el.dataset.row][el.dataset.col]-=1;
+            printarr(wrong);
+            wrong[row][col]=0;
+          } else {
+            printarr(wrong);
+            wrong[el.dataset.row][el.dataset.col]-=1;
+            wrong[row][col]-=1;
+
+          }
+
+        }
+      });
+      cellREls.forEach(el => {
+        if(el.textContent == wrongS&&(el.dataset.row!=row||el.dataset.col!=col)){
+          if(wrong[el.dataset.row][el.dataset.col]==1){
+            el.classList.remove('wrong','wrong1');
+            tile[i].classList.remove('wrong','wrong1');
+            wrong[el.dataset.row][el.dataset.col]-=1;
+            printarr(wrong);
+            wrong[row][col]=0;
+          } else {
+            printarr(wrong);
+            wrong[el.dataset.row][el.dataset.col]-=1;
+            wrong[row][col]-=1;
+
+          }
+        }
+      });
+
+    }

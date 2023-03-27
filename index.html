@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sudoku</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="banter.css">
+        <script src="index.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" type="image/png" href="square-small.png"/>
+
+    </head>
+    <body>
+        <div id="loader">
+            <div class="banter-loader">
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+                <div class="banter-loader__box"></div>
+              </div>
+        </div>
+        <div class="circle"></div>
+        <header>
+            <nav>
+                <ul>
+                    <a href="#" id="refresh-link">Sudoku</a>
+                    <button id="logo"></button>
+                    
+                </ul>
+            </nav>
+        </header>
+        <div id="game-container">
+            <div id="board-container"></div>
+            <div id="blur-screen"></div>
+            <div id="controls-container">
+                <div id="top-controls">
+                    <button id="pause">pause</button>
+                </div>
+                <div id="number-controls">
+                    <button class="number-button" id="1" onclick="numberButtons1(this)">1</button>
+                    <button class="number-button" id="2" onclick="numberButtons1(this)">2</button>
+                    <button class="number-button" id="3" onclick="numberButtons1(this)">3</button>
+                    <button class="number-button" id="4" onclick="numberButtons1(this)">4</button>
+                    <button class="number-button" id="5" onclick="numberButtons1(this)">5</button>
+                    <button class="number-button" id="6" onclick="numberButtons1(this)">6</button>
+                    <button class="number-button" id="7" onclick="numberButtons1(this)">7</button>
+                    <button class="number-button" id="8" onclick="numberButtons1(this)">8</button>
+                    <button class="number-button" id="9" onclick="numberButtons1(this)">9</button>
+                </div>
+                <button class="button" id="new-game" onclick="addAllTiles()">new game</button>
+            </div>
+        </div>
+    </body>
+</html>
