@@ -41,9 +41,13 @@
         <div id="game-container">
             <div id="board-container"></div>
             <div id="blur-screen"></div>
+            <div id="blur1">
+                <button id="play1" class="controls" onclick = "unpause()" ></button>
+            </div>
             <div id="controls-container">
                 <div id="top-controls">
-                    <button id="pause">pause</button>
+                    <button id="pause" class="controls" ></button>
+                    <button id="erase" onclick="erase()" class="controls"></button>
                 </div>
                 <div id="number-controls">
                     <button class="number-button" id="1" onclick="numberButtons1(this)">1</button>
@@ -61,3 +65,5 @@
         </div>
     </body>
 </html>
+
+

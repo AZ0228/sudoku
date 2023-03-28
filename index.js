@@ -1,20 +1,50 @@
+
+
 //what to do
 //make a function that assembles the board
 //make class for wrong tile, selected tile, wrong and selected
 //refresh board, make a clear function
 //make container for all the tiles
 //add click event listener to empty tiles
-const board = [
-  [0, 0, 2, 8, 0, 1, 3, 4, 9],
-  [8, 0, 0, 0, 7, 3, 2, 5, 0],
-  [0, 0, 4, 0, 0, 0, 8, 7, 0],
-  [0, 9, 7, 0, 0, 0, 1, 3, 2],
-  [1, 0, 0, 0, 3, 0, 0, 0, 0],
-  [5, 8, 3, 0, 1, 9, 0, 0, 0],
-  [9, 0, 0, 5, 6, 0, 0, 0, 7],
-  [6, 7, 8, 3, 0, 0, 9, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 8, 3]
+const boards = [
+  [
+    ['301086504046521070500000001400800002080347900009050038004090200008734090007208103'],
+    ['800134902041096080005070010008605000406310009023040860500709000010080040000401006'],
+    ['000003610000015007000008090086000700030800100500120309005060904060900530403701008'],
+    ['007300054245080900003040070070960000000020760000801002008294016609108020000007003'],
+    ['087002010204017003006800705508001000640008100002050670439180007020900030700023091'],
+    ['040000008760020349000470500900000030000036702308947000000004010200700603690001000']
+  ],
+  [
+    ['048301560360008090910670003020000935509010200670020010004002107090100008150834029'],
+    ['008317000004205109000040070327160904901450000045700800030001060872604000416070080'],
+    ['561092730020780090900005046600000427010070003073000819035900670700103080000000050'],
+    ['165293004000001632023060090009175000500900018002030049098000006000000950000429381'],
+    ['960405100020060504001703006100004000490130050002007601209006038070218905600079000'],
+    ['001408006093520741000010520602080300007060000005039060064052109020000654500607083']
+  ],
+  [
+    ['070000043040009610800634900094052000358460020000800530080070091902100005007040802'],
+    ['040890630000136820800740519000467052450020700267010000520003400010280970004050063'],
+    ['310450900072986143906010508639178020150090806004003700005731009701829350000645010'],
+    ['405001068073628500009003070240790030006102005950000021507064213080217050612300007'],
+    ['904520070001890240002643000070960380000108700600000010090080000000750030000312569'],
+    ['320090400705021800001060372218037009500480700000005000670000280000873900804000107']
+  ]
 ];
+
+const board = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+let boardIndex;
 /*
 const board = [
   [5, 3, 0, 6, 7, 8, 9, 1, 2],
@@ -26,22 +56,29 @@ const board = [
   [9, 6, 1, 5, 3, 7, 2, 8, 4],
   [2, 8, 7, 4, 1, 9, 6, 3, 5],
   [3, 4, 5, 2, 8, 6, 1, 7, 9]
-];
-*/
-const wrong = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0]
-];
+];*/
 
-function parseSudoku(difficulty){
-  
+let isPaused=false;
+
+function generateRandom(){
+  const min=1;
+  const max= 6;
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomNumber;
+}
+
+function parseSudoku(difficulty) {
+  let index = boardIndex;
+  while (index == boardIndex) {
+    index = Math.floor(Math.random() * 6); // generates a random number between 0 and 5
+  }
+  boardIndex = index;
+  const boardString = boards[difficulty][boardIndex][0];
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      board[i][j] = parseInt(boardString[i * 9 + j]);
+    }
+  }
 }
 
 function printboard(){
@@ -273,17 +310,42 @@ function numberButtons1(button){
   }
 }
 
-function noText(){
-  let tiles = qsa('.tile');
-  for(let i=0;i<tiles.length;i++){
-    if((tiles[i].classList.contains('filled')||tiles[i].classList.contains('filled1'))&&!(tiles[i].classList.contains('associated')||tiles[i].classList.contains('wrong'))){
-      tiles[i].style.color = "#CED7DD";
-      console.log(1);
-    } else if(tiles[i].classList.contains('wrong')){
-      tiles[i].style.color = "#FFA3A3";
-    }
-    
-  }
+function pause() {
+  // Get all tiles
+  const tiles = document.querySelectorAll('.tile');
+  const blur1 = document.getElementById('blur1');
+  blur1.style.display = "flex";
+  const pause = document.getElementById('pause');
+  pause.style.backgroundImage = 'url("play2.png")';
+  // Loop through tiles
+  tiles.forEach(tile => {
+    // Get background color
+    const backgroundColor = window.getComputedStyle(tile).getPropertyValue('background-color');
+    // Set text color to background color
+    //tile.style.color = backgroundColor;
+    tile.style.color = backgroundColor;
+    tile.style.pointerEvents = 'none';
+  });
+  // Handle pause functionality here
+}
+
+function unpause() {
+  isPaused = false;
+  const blurScreen = document.getElementById("blur-screen");
+  const blur1 = document.getElementById('blur1');
+  blurScreen.style.display = "none";
+  blur1.style.display = "none";
+  const pause = document.getElementById('pause');
+  pause.style.backgroundImage = 'url("pause1.png")';
+  // Get all the tiles on the page
+  const tiles = document.querySelectorAll('.tile');
+  // Loop through each tile and set the text color back to its original value
+  tiles.forEach(tile => {
+    //tile.style.color = tile.style.backgroundColor;
+    tile.style.color = tile.style.backgroundColor;
+    tile.style.pointerEvents = 'auto';
+  });
+
 }
 
 function qsa(selector){
@@ -299,22 +361,36 @@ function buttons(){
 
   const pauseButton = document.getElementById("pause");
   const blurScreen = document.getElementById("blur-screen");
-  let isPaused = false;
+  isPaused = false;
 
   pauseButton.addEventListener("click", () => {
     isPaused = !isPaused;
     blurScreen.style.display = isPaused ? "block" : "none";
     if(isPaused){
-      noText();
+      pause();
     } else {
-
+      unpause();
     }
   });
   
   blurScreen.addEventListener("click", () => {
-    //isPaused = false;
-    //blurScreen.style.display = "none";
+    isPaused = false;
+    blurScreen.style.display = "none";
   });
+}
+
+
+
+function erase(){
+  let tile = qsa(".selected");
+  for(let i=0;i<tile.length;i++){
+    if(!tile[i].classList.contains('filled')){
+      tile[i].textContent = "";
+      tile[i].classList.remove('filled1','wrong1');
+      checkValid();
+    }
+    
+  }
 }
 
 function startAnimation(){
@@ -337,8 +413,11 @@ function startAnimation(){
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  parseSudoku(1); 
   addAllTiles();
+
   buttons();
   startAnimation();
+  
 });
 
