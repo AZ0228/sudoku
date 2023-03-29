@@ -7,6 +7,10 @@
         <title>Sudoku</title>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="banter.css">
+        <link rel="stylesheet" href="tiles.css">
+        <link rel="stylesheet" href="controls.css">
+
+
         <script src="index.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,8 +50,20 @@
             </div>
             <div id="controls-container">
                 <div id="top-controls">
-                    <button id="pause" class="controls" ></button>
-                    <button id="erase" onclick="erase()" class="controls"></button>
+                    <div id ="mistake-container">
+                        <div id="w1" class="mistake"></div>
+                        <div id="w2" class="mistake"></div>
+                        <div id="w3" class="mistake"></div>
+                        <div id="w4" class="mistake"></div>
+                    </div>
+                        <button id="pause" class="controls" ></button>
+                        <button id="erase" onclick="erase()" class="controls"></button>
+                        <button id="difficulty" onclick="difficulty()" class="controls">
+                            <div id="easy" class="easy"></div>
+                            <div id="medium" ></div>
+                            <div id="hard"></div>
+                        </button>
+
                 </div>
                 <div id="number-controls">
                     <button class="number-button" id="1" onclick="numberButtons1(this)">1</button>

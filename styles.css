@@ -1,5 +1,3 @@
-
-
 html{
     height:100%;
     cursor: url("arrow-pointer1.png" ), auto;
@@ -25,6 +23,10 @@ button{
 
 }
 
+.transform{
+    transform: scale(0.95);
+}
+
 #top-controls button:hover{
     transform: scale(1.05);
 }
@@ -35,44 +37,6 @@ button{
 
 .transparent{
     opacity: 0;
-}
-
-#pause{
-    background-image: url("pause1.png");
-    background-size: contain;
-}
-
-.play{
-    background-image: url("play2.png");
-    background-size: contain;
-    z-index: 9999999;
-
-
-}
-
-#play1{
-    background-image: url("play3.png");
-    background-size: contain;
-    z-index: 9999999;
-    position:fixed;
-    align-self: center;
-    justify-self: center;
-    background-color: transparent;
-    border: none;
-    height:6vw;
-    width:6vw;
-    max-height:100px;
-    max-width:100px;
-}
-#play1:hover{
-    transform: scale(1.05);
-}
-#play1:active{
-    transform:scale(1);
-}
-#erase{
-    background-image: url("eraser2.png");
-    background-size: contain;
 }
 
 header {
@@ -179,205 +143,30 @@ header button:active{
     position:fixed;
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    justify-content: space-between;
     flex-direction: row;
 }
+
+@media(max-width: 1350px){
+    #game-container{
+        flex-direction: column;
+        top:45%;
+        height:70%;
+    }
+    
+}
+
 #board-container {
     /* padding-top:50px; */
-    position: fixed;
+    /* position: fixed; */
     z-index:-1;
-    height: max(488px,min(40vw,605px));
-    width: max(488px,min(40vw,605px));
+    height: max(488px,min(40vw,625px));
+    width: max(488px,min(40vw,625px));
     flex-wrap: wrap;
     align-content: center;
     justify-content:center;
     display:flex;
     flex-direction: row;
-}
-#top-controls{
-    height: 35%;
-    background-color: #EDF2F5;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-#controls-container{
-    display:flex;
-    position:absolute;
-    align-content: flex-end;
-    flex-wrap: wrap;
-    right:0;
-    height: min(40vw,605px);
-    width: min(18vw,300px);
-    align-self:flex-end; 
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-#number-controls{
-    display:flex;
-    width:100%;
-    height: min(18vw,300px);
-    background-color: #EDF2F5;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-    border-radius: 10px;
-}
-
-.number-button{
-    user-select:none;
-    pointer-events: all;
-    border:none;
-    height: 25%;
-    max-width: 70px;
-    max-height: 70px;
-    width: 25%;
-    margin:0.4vw;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    border: 4px solid #C7C8E7;
-    color: #4E5775;
-    font-family: 'Inter';
-    font-size: min(36px,2.5vw);
-    font-weight:700;
-    background-color: #C7C8E7;
-    border-radius:5px;
-    transition: 0.2s;
-}
-
-.number-button:hover{
-    border: 4px solid #ACADD2;
-}
-
-.number-button:active{
-    border: 4px solid #4E5775;
-    font-size:28px;
-
-}
-
-.tile {
-
-    user-select:none;
-    pointer-events: all;
-    border-radius: 0.347vw;
-    margin: min(5px, 0.1vw);
-    max-height: 60px;
-    max-width: 60px;
-    height: max(4vw,50px);
-    width: max(4vw,50px);
-    background-color: #EDF2F5;
-    z-index: 1;
-    text-align: center;
-    color: #4E5775;
-    font-family: 'Inter';
-    font-weight: 700;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing:border-box;
-}
-
-
-.right{
-    margin-right: min(0.75vw,30px);
-}
-
-.bottom {
-    margin-bottom: min(0.75vw,30px);
-}
-.filled1{
-    background-color: #CED7DD;
-    border: 4px solid #ACADD2;
-}
-
-.associated {
-    background-color: #E3E4F9;
-}
-
-.same {
-    background-color: #CED7DD;
-}
-.filled1-associated{
-    background-color: #C7C8E7;
-    border: 4px solid #ACADD2;
-}
-.filled {
-    background-color: #CED7DD;
-}
-
-
-
-.associated-filled {
-    background-color: #C7C8E7;
-}
-
-.hover {
-    background-color: #E3E4F9;
-}
-
-.hover-filled {
-    background-color: #C7C8E7;
-}
-
-.hover-associated-filled{
-    background-color: #ACADD2;
-}
-
-.wrong {
-    background-color: #FFA3A3;
-}
-.wrong1{
-    border: 4px solid #E16262;
-}
-
-.selected {
-    background-color: #4E5775;
-    color: #ECECEC;
-}
-.tile:active, .tile:focus {
-    transform: scale(1.05);
-
-}
-
-#new-game {
-    --bg: #4E5775;
-    --hover-bg: #C7C8E7;
-    --hover-text: #4E5775;
-    color: #FFF;
-    border: 4px solid var(--bg);
-    border-radius: 4px;
-    height: 3.5vw;
-    background: var(--bg, #000); /* added fallback value */
-    transition: 0.2s;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    display: inline-block;
-    /* margin-top: 30px; */
-    border-radius: 6px;
-    min-height: 65px;
-}
-
-#new-game:hover {
-  color: var(--hover-text);
-  background: var(--hover-bg);
-  border: 4px solid var(--hover-bg);
-
-}
-
-#new-game:active {
-    background: #C7C8E7; /* added fallback value */
-    border: 4px solid var(--bg);
-    font-size:22px;
-
 }
 
 #blur-screen {
@@ -419,24 +208,5 @@ header button:active{
     transform: translate(-50%, -50%) scale(110.5);
   }
 
-  .controls{
-    user-select:none;
-    pointer-events: all;
-    border:none;
-    height: 35%;
-    max-width: 70px;
-    max-height: 70px;
-    width: 25%;
-    margin:0.4vw;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    border: 4px solid #C7C8E7;
-    color: #4E5775;
-    font-family: 'Inter';
-    font-size: min(36px,2.5vw);
-    font-weight:700;
-    background-color: #C7C8E7;
-    border-radius:5px;
-    transition: 0.2s;
-  }
+
+

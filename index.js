@@ -33,6 +33,7 @@ const boards = [
   ]
 ];
 
+
 const board = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -45,6 +46,9 @@ const board = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 let boardIndex;
+let boardDifficulty = 1;
+let wrongStatus = false;
+let numberWrong = 0;
 /*
 const board = [
   [5, 3, 0, 6, 7, 8, 9, 1, 2],
@@ -103,6 +107,18 @@ function full(){
   return full;
 }
 
+function addWrong(){
+  if(wrongStatus){
+    wrongStatus = false;
+    numberWrong+=1;
+    let mistake = qsa(".mistake");
+    mistake[Math.min(3,numberWrong-1)].classList.add("transform1");
+    for(let i=0;i<numberWrong&&i<4;i++){
+      mistake[i].classList.add('mistake-made');
+    }
+  }
+}
+
 function checkValid(){
   let valid = true;
   let tiles = qsa('.tile');
@@ -116,6 +132,7 @@ function checkValid(){
     rowtiles.forEach(tile => {
       if(tile.classList.contains('filled')||tile.classList.contains('filled1')){
         if(row.has(tile.textContent)){
+          wrongStatus = true;
           valid = false;
           row.get(tile.textContent).push(tile);
           row.get(tile.textContent).forEach(el => {
@@ -132,6 +149,7 @@ function checkValid(){
     coltiles.forEach(tile => {
       if(tile.classList.contains('filled')||tile.classList.contains('filled1')){
         if(col.has(tile.textContent)){
+          wrongStatus = true;
           valid = false;
           col.get(tile.textContent).push(tile);
           col.get(tile.textContent).forEach(el => {
@@ -154,6 +172,7 @@ function checkValid(){
         if(tile.classList.contains('filled')||tile.classList.contains('filled1')){
           if(cell.has(tile.textContent)){
             valid = false;
+            wrongStatus = true;
             cell.get(tile.textContent).push(tile);
             cell.get(tile.textContent).forEach(el => {
               if(el.classList.contains('filled1')){
@@ -175,6 +194,7 @@ function checkValid(){
       el.classList.add('wrong');
     });
   }
+  addWrong();
   return valid;
 }
 
@@ -315,6 +335,7 @@ function pause() {
   const tiles = document.querySelectorAll('.tile');
   const blur1 = document.getElementById('blur1');
   blur1.style.display = "flex";
+  const play = document.getElementById('play1');
   const pause = document.getElementById('pause');
   pause.style.backgroundImage = 'url("play2.png")';
   // Loop through tiles
@@ -325,7 +346,9 @@ function pause() {
     //tile.style.color = backgroundColor;
     tile.style.color = backgroundColor;
     tile.style.pointerEvents = 'none';
+    tile.classList.add('transform');
   });
+  play.classList.add('transform');
   // Handle pause functionality here
 }
 
@@ -336,6 +359,7 @@ function unpause() {
   blurScreen.style.display = "none";
   blur1.style.display = "none";
   const pause = document.getElementById('pause');
+  const play = document.getElementById('play1');
   pause.style.backgroundImage = 'url("pause1.png")';
   // Get all the tiles on the page
   const tiles = document.querySelectorAll('.tile');
@@ -344,7 +368,9 @@ function unpause() {
     //tile.style.color = tile.style.backgroundColor;
     tile.style.color = tile.style.backgroundColor;
     tile.style.pointerEvents = 'auto';
+    tile.classList.remove('transform');
   });
+  play.classList.remove('transform');
 
 }
 
@@ -379,17 +405,41 @@ function buttons(){
   });
 }
 
-
-
 function erase(){
-  let tile = qsa(".selected");
-  for(let i=0;i<tile.length;i++){
-    if(!tile[i].classList.contains('filled')){
-      tile[i].textContent = "";
-      tile[i].classList.remove('filled1','wrong1');
-      checkValid();
+  if(!isPaused){
+    let tile = qsa(".selected");
+    for(let i=0;i<tile.length;i++){
+      if(!tile[i].classList.contains('filled')){
+        tile[i].textContent = "";
+        tile[i].classList.remove('filled1','wrong1');
+        checkValid();
+      }
     }
-    
+  }
+}
+
+function difficulty(){
+  const easy = document.getElementById("easy");
+  const medium = document.getElementById("medium");
+  const hard = document.getElementById("hard");
+  if(boardDifficulty == 1){
+    boardDifficulty +=1;
+    easy.classList.remove("easy");
+    easy.classList.add("medium");
+    medium.classList.add("medium");
+  } else if(boardDifficulty == 2){
+    boardDifficulty +=1;
+    easy.classList.remove("medium");
+    medium.classList.remove("medium");
+    easy.classList.add("hard");
+    medium.classList.add("hard");
+    hard.classList.add("hard");
+  } else {
+    boardDifficulty = 1;
+    easy.classList.remove("hard");
+    medium.classList.remove("hard");
+    hard.classList.remove("hard");
+    easy.classList.add("easy");
   }
 }
 
