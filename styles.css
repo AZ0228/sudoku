@@ -172,8 +172,8 @@ header button:active{
 #blur-screen {
     display: none;
     position: fixed;
-    height: max(488px,min(40vw,605px));
-    width: max(488px,min(40vw,605px));
+    height: max(488px,min(40vw,625px));
+    width: max(488px,min(40vw,625px));
     background-color: rgba(237, 242, 245, 0.5);
     filter: blur(5px);
     z-index: 999;
@@ -183,8 +183,8 @@ header button:active{
     pointer-events: all;
     display: none;
     position: fixed;
-    height: max(488px,min(40vw,605px));
-    width: max(488px,min(40vw,605px));
+    height: max(488px,min(40vw,625px));
+    width: max(488px,min(40vw,625px));
     z-index: 999;
     align-items: center;
     justify-content: center;

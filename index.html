@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="tiles.css">
         <link rel="stylesheet" href="controls.css">
 
-
         <script src="index.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +46,14 @@
             <div id="blur-screen"></div>
             <div id="blur1">
                 <button id="play1" class="controls" onclick = "unpause()" ></button>
+                <div id="new-game-blur">
+                    <h3 id="blurText1">start new game?</h3>
+                    <p id="blurText2">current progress will be lost</p>
+                    <div>
+                        <button class="button" id="new-game1" onclick="addAllTiles()">ok</button>
+                        <button class="button" id="new-game1" onclick="unpause()">back</button>
+                    </div>
+                </div>
             </div>
             <div id="controls-container">
                 <div id="top-controls">
@@ -76,7 +83,7 @@
                     <button class="number-button" id="8" onclick="numberButtons1(this)">8</button>
                     <button class="number-button" id="9" onclick="numberButtons1(this)">9</button>
                 </div>
-                <button class="button" id="new-game" onclick="addAllTiles()">new game</button>
+                <button class="button" id="new-game" onclick="newGame()">new game</button>
             </div>
         </div>
     </body>

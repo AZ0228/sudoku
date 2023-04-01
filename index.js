@@ -63,6 +63,7 @@ const board = [
 ];*/
 
 let isPaused=false;
+let isLost = false;
 
 function generateRandom(){
   const min=1;
@@ -77,7 +78,8 @@ function parseSudoku(difficulty) {
     index = Math.floor(Math.random() * 6); // generates a random number between 0 and 5
   }
   boardIndex = index;
-  const boardString = boards[difficulty][boardIndex][0];
+  console.log(boardIndex);
+  const boardString = boards[difficulty-1][boardIndex][0];
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       board[i][j] = parseInt(boardString[i * 9 + j]);
@@ -116,7 +118,21 @@ function addWrong(){
     for(let i=0;i<numberWrong&&i<4;i++){
       mistake[i].classList.add('mistake-made');
     }
+    if(numberWrong == 4){
+      lost();
+    }
   }
+}
+
+function clearWrong(){
+  wrongStatus = false;
+  let mistake = qsa(".mistake");
+  for(let i=0;i<numberWrong&&i<4;i++){
+    mistake[i].classList.remove('mistake-made');
+    mistake[i].classList.remove('transform1');
+  }
+  numberWrong = 0;
+
 }
 
 function checkValid(){
@@ -199,6 +215,9 @@ function checkValid(){
 }
 
 function addAllTiles(){
+
+  parseSudoku(boardDifficulty); 
+  console.log(boardDifficulty);
   clearprevious();
   const container = document.getElementById('board-container');
   let selectedTile = null;
@@ -308,14 +327,23 @@ function addAllTiles(){
 }
 
 function clearprevious(){
+  isPaused = false;
+  isLost = false;
+  clearWrong();
+  unpause();
   let tiles = qsa('.tile');
   for(let i=0; i<tiles.length;i++){
       tiles[i].remove();
-    
   }
 
 }
 function numberButtons1(button){
+  if(isLost){
+    return;
+  }
+  if(isPaused){
+    return;
+  }
   let tile = qsa('.selected');
   for(let i=0;i<tile.length;i++){
     if(tile[i].classList.contains('empty')){
@@ -331,12 +359,29 @@ function numberButtons1(button){
 }
 
 function pause() {
+  const blurScreen = document.getElementById("blur-screen");
+  blurScreen.style.display = "block";
+
   // Get all tiles
+  const tile = qsa(".selected");
+  for(let i=0;i<tile.length;i++){
+    tile[i].classList.remove('selected');
+    tile[i].classList.add('associated');
+  }
   const tiles = document.querySelectorAll('.tile');
   const blur1 = document.getElementById('blur1');
   blur1.style.display = "flex";
   const play = document.getElementById('play1');
   const pause = document.getElementById('pause');
+  if(isLost){
+    play.style.display = "none";
+    const blur = document.getElementById("new-game-blur");
+    blur.style.display = "flex";
+    const youLost = document.getElementById("blurText1");
+    const startNew = document.getElementById("blurText2");
+    youLost.textContent = "you lost!";
+    startNew.textContent = "start a new game?"
+  }
   pause.style.backgroundImage = 'url("play2.png")';
   // Loop through tiles
   tiles.forEach(tile => {
@@ -354,12 +399,15 @@ function pause() {
 
 function unpause() {
   isPaused = false;
+  const blur = document.getElementById("new-game-blur");
+  blur.style.display = "none";
   const blurScreen = document.getElementById("blur-screen");
   const blur1 = document.getElementById('blur1');
   blurScreen.style.display = "none";
   blur1.style.display = "none";
   const pause = document.getElementById('pause');
   const play = document.getElementById('play1');
+  play.style.display = "flex";
   pause.style.backgroundImage = 'url("pause1.png")';
   // Get all the tiles on the page
   const tiles = document.querySelectorAll('.tile');
@@ -391,7 +439,6 @@ function buttons(){
 
   pauseButton.addEventListener("click", () => {
     isPaused = !isPaused;
-    blurScreen.style.display = isPaused ? "block" : "none";
     if(isPaused){
       pause();
     } else {
@@ -406,7 +453,7 @@ function buttons(){
 }
 
 function erase(){
-  if(!isPaused){
+  if(!isPaused&& !isLost){
     let tile = qsa(".selected");
     for(let i=0;i<tile.length;i++){
       if(!tile[i].classList.contains('filled')){
@@ -441,6 +488,29 @@ function difficulty(){
     hard.classList.remove("hard");
     easy.classList.add("easy");
   }
+  newGame();
+}
+
+function lost(){
+  isLost = true;
+  isPaused = true;
+  pause();
+
+}
+
+function newGame(){
+  pause();
+  if(isLost){
+    addAllTiles();
+  }
+  const play = document.getElementById("play1");
+  const blur = document.getElementById("new-game-blur");
+  const sure = document.getElementById("blurText1");
+  const progress = document.getElementById("blurText2");
+  play.style.display = "none";
+  blur.style.display = "flex";
+  sure.textContent = "start new game?";
+  progress.textContent = "current progress will be lost";
 }
 
 function startAnimation(){
@@ -463,7 +533,6 @@ function startAnimation(){
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  parseSudoku(1); 
   addAllTiles();
 
   buttons();
