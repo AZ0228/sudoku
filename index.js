@@ -49,6 +49,18 @@ let boardIndex;
 let boardDifficulty = 1;
 let wrongStatus = false;
 let numberWrong = 0;
+
+const empty = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
 /*
 const board = [
   [5, 3, 0, 6, 7, 8, 9, 1, 2],
@@ -215,7 +227,6 @@ function checkValid(){
 }
 
 function addAllTiles(){
-
   parseSudoku(boardDifficulty); 
   console.log(boardDifficulty);
   clearprevious();
@@ -229,6 +240,7 @@ function addAllTiles(){
       newDiv.dataset.cellrow = Math.floor(i/3);
       newDiv.dataset.cellcol = Math.floor(j/3);
       newDiv.classList.add('tile');
+      newDiv.classList.add('delete');
       if(board[i][j]==0){
         newDiv.classList.add('empty')
       } else {
@@ -287,6 +299,10 @@ function addAllTiles(){
             } else if(el.classList.contains('filled1')){
               el.classList.add('filled1-associated');
             }
+            el.classList.add('transform1');
+            setTimeout(() => {
+              el.classList.remove('transform1');
+            }, 300);
           });
           colEls.forEach(el => {
             el.classList.add('associated');
@@ -295,6 +311,10 @@ function addAllTiles(){
             } else if(el.classList.contains('filled1')){
               el.classList.add('filled1-associated');
             }
+            el.classList.add('transform1');
+            setTimeout(() => {
+              el.classList.remove('transform1');
+            }, 300);
           });
           cellREls.forEach(el => {
             el.classList.add('associated');
@@ -303,6 +323,10 @@ function addAllTiles(){
             } else if(el.classList.contains('filled1')){
               el.classList.add('filled1-associated');
             }
+            el.classList.add('transform1');
+            setTimeout(() => {
+              el.classList.remove('transform1');
+            }, 300);
           });
         }});
         newDiv.addEventListener('mouseover',function(){
@@ -324,6 +348,9 @@ function addAllTiles(){
       container.appendChild(newDiv);
     }
   }
+  setTimeout(() => {
+    ripple();
+  }, 600);
 }
 
 function clearprevious(){
@@ -373,14 +400,14 @@ function pause() {
   blur1.style.display = "flex";
   const play = document.getElementById('play1');
   const pause = document.getElementById('pause');
+  const blur = document.getElementById("new-game-blur");
   if(isLost){
     play.style.display = "none";
-    const blur = document.getElementById("new-game-blur");
     blur.style.display = "flex";
     const youLost = document.getElementById("blurText1");
     const startNew = document.getElementById("blurText2");
     youLost.textContent = "you lost!";
-    startNew.textContent = "start a new game?"
+    startNew.textContent = "start a new game?";
   }
   pause.style.backgroundImage = 'url("play2.png")';
   // Loop through tiles
@@ -513,6 +540,7 @@ function newGame(){
   progress.textContent = "current progress will be lost";
 }
 
+
 function startAnimation(){
   const circle = document.querySelector('.circle');
   setTimeout(function() {
@@ -532,11 +560,43 @@ function startAnimation(){
   }, 2500)
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  addAllTiles();
+function ripple(){
+  const middleTile = document.querySelector('.tile:nth-child(41)');
+  setTimeout(() => {
+    middleTile.classList.remove('delete');
+  }, 500);
+  const tiles = document.querySelectorAll('.tile');
+  tiles.forEach(tile => {
+    tile.style.transition = 'all 0.5s';
+  });
+    tiles.forEach(tile => {
+      if (tile !== middleTile) {
+        const distance = Math.abs(parseInt(middleTile.dataset.row) - parseInt(tile.dataset.row)) + Math.abs(parseInt(middleTile.dataset.col) - parseInt(tile.dataset.col));
+        if (distance <= 8) {
+          const delay = distance * 100;
+          setTimeout(() => {
+            tile.style.transform = `scale(${1 + (distance / 10)})`;
+            tile.classList.remove('delete');
+            tile.style.opacity = `${1 - (distance / 5)}`;
+          }, delay);
+          setTimeout(() => {
+            tile.style.transform = '';
+            tile.style.opacity = '';
+          }, delay + 200);
+        }
+      }
+    });
+  rippleEffect();
+}
 
-  buttons();
+document.addEventListener("DOMContentLoaded", function() {
+
+
   startAnimation();
+  setTimeout(() => {
+    addAllTiles();
+  }, 1500);
+  buttons();
   
 });
 

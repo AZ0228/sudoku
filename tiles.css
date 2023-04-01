@@ -1,24 +1,44 @@
 .tile {
-user-select:none;
-pointer-events: all;
-border-radius: 0.347vw;
-margin: min(5px, 0.1vw);
-max-height: 60px;
-max-width: 60px;
-height: max(4vw,50px);
-width: max(4vw,50px);
-background-color: #EDF2F5;
-z-index: 1;
-text-align: center;
-color: #4E5775;
-font-family: 'Inter';
-font-weight: 700;
-font-size: 24px;
-display: flex;
-align-items: center;
-justify-content: center;
-box-sizing:border-box;
-transition:transform 0.2s ease-in;
+
+user-select:none;
+
+pointer-events: all;
+
+border-radius: 0.347vw;
+
+margin: min(5px, 0.1vw);
+
+max-height: 60px;
+
+max-width: 60px;
+
+height: max(4vw,50px);
+
+width: max(4vw,50px);
+
+background-color: #EDF2F5;
+
+z-index: 1;
+
+text-align: center;
+
+color: #4E5775;
+
+font-family: 'Inter';
+
+font-weight: 700;
+
+font-size: 24px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+box-sizing:border-box;
+
+transition:transform 0.2s ease-in;
 }
 
 
@@ -81,4 +101,9 @@
 .tile:active, .tile:focus {
     transform: scale(1.05);
 
+}
+.delete{
+    border:none;
+    background-color: #EDF2F5;
+    color:#EDF2F5;
 }
