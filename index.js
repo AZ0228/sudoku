@@ -350,7 +350,7 @@ function addAllTiles(){
   }
   setTimeout(() => {
     ripple();
-  }, 600);
+  }, 100);
 }
 
 function clearprevious(){
@@ -595,7 +595,7 @@ document.addEventListener("DOMContentLoaded", function() {
   startAnimation();
   setTimeout(() => {
     addAllTiles();
-  }, 1500);
+  }, 1950);
   buttons();
   
 });
